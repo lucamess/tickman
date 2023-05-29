@@ -3,7 +3,7 @@ import styled from "styled-components"
 import toast from "react-hot-toast"
 import { useRecoilState } from "recoil"
 import { useNavigate } from "react-router-dom"
-import { Space, Row, Select, Button } from "comp"
+import { Space, Row, Select, Button, MenuButton } from "comp"
 import { grades, sections, links } from "src/config"
 import { entriesState } from "src/states"
 import { fetchEntries } from "src/api"
@@ -16,9 +16,9 @@ const fetchToastOptions = {
 
 const TeacherHome = () => {
 	const navigate = useNavigate()
-	const [, setEntries] = useRecoilState(entriesState)
-	const [selGrade, setSelGrade] = useState("12")
-	const [selSection, setSelSection] = useState("G")
+	const [entries, setEntries] = useRecoilState(entriesState)
+	const [selGrade, setSelGrade] = useState("11")
+	const [selSection, setSelSection] = useState("A")
 
 	const handleViewAttd = () => {
 		navigate(links.viewAttd, {
@@ -37,19 +37,20 @@ const TeacherHome = () => {
 	}
 
 	useEffect(() => {
-		toast.promise(
-			fetchEntries()
-				.then(entries => {
-					setEntries(entries)
-				}),
-			fetchToastOptions
-		)
+		if(entries.length == 0)
+			toast.promise(
+				fetchEntries()
+					.then(entries => {
+						setEntries(entries)
+					}),
+				fetchToastOptions)
 	}, [])
 
 	return (
 		<>
 		<Block />
 		<Container>
+			<MenuButton />
 			<Space h="4rem" />
 			<Title>Good morning, teacher.</Title>
 
@@ -81,6 +82,8 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 2rem;
+	max-width: 500px;
+	margin: 0 auto;
 `
 
 const Block = styled.div`

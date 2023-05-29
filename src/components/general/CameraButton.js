@@ -12,7 +12,7 @@ const CameraButton = ({ onClick }) => {
 			<CameraIcon style={{ cursor: "pointer" }} onClick={handleClick} size="2rem" />
 			<Invisible>
 				<input ref={inputRef} type="file" accept="image/*;capture=camera"
-					onChange={e => onClick(e.target.files[0])}/>
+					onChange={e => {onClick(e.target.files[0]); console.log("file-selected", e.target.files[0])}}/>
 			</Invisible>
 		</Container>
 	)

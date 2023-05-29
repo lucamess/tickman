@@ -10,6 +10,7 @@ import StudentProfile from "src/views/StudentProfile"
 import ViewIssues from "src/views/ViewIssues"
 import ViewAttendance from "src/views/ViewAttendance"
 import TeacherHome from "src/views/TeacherHome"
+import AdminLogin from "src/views/AdminLogin"
 import AdminHome from "src/views/AdminHome"
 
 const GlobalStyle = createGlobalStyle`
@@ -56,6 +57,9 @@ const App = () => {
 
 				<Route path={routePathList.adminHome}
 					element={<AdminHome />} />
+
+				<Route path={routePathList.adminLogin}
+					element={<AdminLogin />} />
 			</Routes>
 		</HashRouter>
 		</ThemeProvider>

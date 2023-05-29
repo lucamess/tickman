@@ -1,5 +1,5 @@
 import { attdEmojis } from "src/config"
-import { months } from "src/config"
+import { months, serverBaseUrl } from "src/config"
 
 export const nullFn = () => null
 export const toggle = a => !a
@@ -135,4 +135,38 @@ export const sleep = (ms) => (value) => {
 		setTimeout(() => res(value), ms)
 	})
 }
+export const calcDaysDiff = (date1, date2) => {
+	const d1 = new Date(date1)
+	const d2 = new Date(date2)
+	const diffTime = Math.abs(d2 - d1)
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+	return diffDays
+}
+export const extractImagesFromEntries = entries => {
+	let reqObj = {}
+
+	entries.forEach(entry => {
+		if(entry.img) {
+			reqObj = {
+				...reqObj,
+				[entry.entryId]: entry.img,
+			}
+		}
+	})
+
+	return reqObj
+}
+
+export const removeWholeImgFromEntries = entries => {
+	return entries.map(entry => ({
+		...entry,
+		img: entry.img ? "1" : "",
+	}))
+
+}
+
+export const getImageLink = entryId =>
+	`${serverBaseUrl}notes-images/${entryId}.png`
+
 

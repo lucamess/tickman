@@ -29,7 +29,7 @@ const fetchToastOptions = {
 
 const EditDay = () => {
 	const location = useLocation()
-	const [ grade, section ] = [location.state.grade || "12", location.state.section || "G"]
+	const [ grade, section ] = [location.state.grade || "11", location.state.section || "A"]
 	const [, setGlobalEntries] = useRecoilState(entriesState)
 	const students = filterByClass(useRecoilState(studentsState)[0], grade, section)
 	const [entries, setEntries] = useState(genEntriesFromStudents(students))
@@ -86,6 +86,8 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 1rem;
+	max-width: 500px;
+	margin: 0 auto;
 `
 
 export default EditDay

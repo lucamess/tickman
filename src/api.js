@@ -1,5 +1,5 @@
 import axios from "axios"
-import { sleep } from "src/utils"
+import { extractImagesFromEntries, removeWholeImgFromEntries } from "src/utils"
 import { serverBaseUrl } from "src/config"
 
 const sampleEntries = [
@@ -23,7 +23,10 @@ const sampleEntries = [
 const sendRequest = (url, obj = {}) => {
 	const bodyFormData = new FormData()
 	Object.keys(obj).forEach(key => {
-		bodyFormData.append(key, JSON.stringify(obj[key]))
+		if(key in ["entries", "grade", "section", "date"])
+			bodyFormData.append(key, JSON.stringify(obj[key]))
+		else
+			bodyFormData.append(key, obj[key])
 	})
 
 	return axios({
@@ -52,7 +55,11 @@ const sendRequest = (url, obj = {}) => {
 export const saveEntries = (entries, grade, section, date) => {
 	/// DONT FORGET to refresh the local state after saving on the server
 	console.log("save entries for", entries, grade, section, date)
-	return sendRequest("save-entries.php", { entries, grade, section, date })
+	const reqObj = { grade, section, date,
+		entries: removeWholeImgFromEntries(entries),
+		...extractImagesFromEntries(entries) }
+
+	return sendRequest("save-entries.php", reqObj)
 }
 export const fetchEntries = () => {
 	return sendRequest("get-entries.php")

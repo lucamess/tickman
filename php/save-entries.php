@@ -15,6 +15,12 @@ $query .= "`date` = '" . mysqli_real_escape_string($conn, $date) . "'";
 mysqli_query($conn, $query);
 
 foreach($entries as $entry) {
+	$img = $entry->img;
+	if($img != "") {
+		upload_note_image($entry->entryId);
+		$img = "1";
+	}
+
 	$query = "INSERT INTO attd_entries("
 		. " `entryId`, `studentId`, `name`, `grade`, `section`, `note`,"
 		. " `img`, `attd`, `date`, `time`"
@@ -25,7 +31,7 @@ foreach($entries as $entry) {
 		. "'" . mysqli_real_escape_string($conn, $entry->grade) . "', "
 		. "'" . mysqli_real_escape_string($conn, $entry->section) . "', "
 		. "'" . mysqli_real_escape_string($conn, $entry->note) . "', "
-		. "'" . mysqli_real_escape_string($conn, $entry->img) . "', "
+		. "'" . mysqli_real_escape_string($conn, $img) . "', "
 		. "'" . mysqli_real_escape_string($conn, $entry->attd) . "', "
 		. "'" . mysqli_real_escape_string($conn, $entry->date) . "', "
 		. "'" . mysqli_real_escape_string($conn, $entry->time) . "')";

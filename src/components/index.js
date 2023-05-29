@@ -7,9 +7,11 @@ import { Input, InputMultiple, Select } from "./general/Input"
 import Button from "./general/Button"
 import FaceButton from "./general/FaceButton"
 import IssuesBoard from "./general/IssuesBoard"
+import MenuButton from "./general/MenuButton"
 
 export { AttdButton, TimeButton, Input, InputMultiple, Select, CameraButton }
 export { Space, FlexGrow, Button, Row, FaceButton, IssuesBoard, Block }
+export { MenuButton }
 
 // TABLES
 import DayTable from "./tables/DayTable"

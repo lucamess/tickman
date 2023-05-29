@@ -3,7 +3,7 @@ import styled from "styled-components"
 import * as faceapi from "face-api.js"
 import { modelsUrl, facesUrl, faceLabels } from "src/config"
 import { nullFn } from "src/utils"
-import { Button } from "comp"
+import { Button, Space } from "comp"
 
 
 const FaceAI = ({ onDetect = nullFn }) => {
@@ -21,7 +21,7 @@ const FaceAI = ({ onDetect = nullFn }) => {
 	const startVideo = () => {
 		setCaptureVideo(true);
 		navigator.mediaDevices
-			.getUserMedia({ video: { width: 360 } })
+			.getUserMedia({ video: { width: videoWidth } })
 			.then(stream => {
 				let video = videoRef.current;
 				video.srcObject = stream;
@@ -53,11 +53,12 @@ const FaceAI = ({ onDetect = nullFn }) => {
 
 				faceapi.matchDimensions(canvasRef.current, displaySize);
 
-				const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
+				const detections = await faceapi.detectAllFaces(videoRef.current,
+					new faceapi.TinyFaceDetectorOptions())
 						.withFaceLandmarks().withFaceDescriptors()
 				const resizedDetections = faceapi.resizeResults(detections, displaySize)
 
-				const faceMatcher = new faceapi.FaceMatcher(labeledData, 0.6)
+				const faceMatcher = new faceapi.FaceMatcher(labeledData, 0.7)
 				const results = resizedDetections.map(fd => {
 					return faceMatcher.findBestMatch(fd.descriptor)
 				})
@@ -86,7 +87,8 @@ const FaceAI = ({ onDetect = nullFn }) => {
 					captureVideo ? <Button onClick={closeWebcam} size="small" width="100px">Stop</Button> :
 					<Button onClick={startVideo} size="small" width="200px">Face Recognition</Button>
 			}
-			<div style={{ display: 'none', }}>
+			<Space h="0.5rem" />
+			<div style={{ display: (dataReady && captureVideo) ? "block" : "none" }}>
 				<video ref={videoRef} height={videoHeight} width={videoWidth} onPlay={handleOnPlay} style={{ borderRadius: '10px' }} />
 				<canvas ref={canvasRef} />
 			</div>

@@ -59,6 +59,8 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 1rem;
+	max-width: 500px;
+	margin: 0 auto;
 `
 const Nothing = styled.h1`
 	color: #545454;
