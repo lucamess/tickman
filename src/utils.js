@@ -167,6 +167,6 @@ export const removeWholeImgFromEntries = entries => {
 }
 
 export const getImageLink = entryId =>
-	`${serverBaseUrl}notes-images/${entryId}.png`
+	`${serverBaseUrl}notes-images/${entryId}.jpg`
 
 

@@ -31,7 +31,7 @@ export const serverBaseUrl = "https://incorporeal-yaw.000webhostapp.com/attd/"
 
 export const modelsUrl = "https://incorporeal-yaw.000webhostapp.com/attd/models/"
 export const facesUrl = "https://incorporeal-yaw.000webhostapp.com/attd/faces/"
-export const faceLabels = ["1"]
+export const faceLabels = ["1","2","3","4","5","6"]
 // export const modelsUrl = "http://0.0.0.0:8000/models/"
 // export const facesUrl = "http://0.0.0.0:8000/faces/"
 // export const faceLabels = ["1"]
