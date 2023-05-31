@@ -4,7 +4,7 @@ const sampleStudents = [
 	{ studentId: 1, name: "Aman Redi", grade: "11", section: "A", phonenumber: "0911203040", face: "" },
 	{ studentId: 2, name: "Aymen Kedir", grade: "11", section: "A", phonenumber: "0911203040", face: "" },
 	{ studentId: 3, name: "Biruk Million", grade: "11", section: "A", phonenumber: "0911203040", face: "" },
-	{ studentId: 4, name: "Amanuel Asheber", grade: "11", section: "B", phonenumber: "0911203040", face: "" },
+	{ studentId: 4, name: "Amanuel Asheber", grade: "11", section: "B", phonenumber: "0911203040", face: "", suspended: true },
 	{studentId:5,name:"Kaleb Dembelash",grade: "11",section:"B",phonenumber:"0911203040", face: "" },
 	{studentId:6,name:"Kirubel Belayneh",grade: "11",section: "B",phonenumber:"0911203040",face: "" },
 ]

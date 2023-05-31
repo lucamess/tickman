@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil"
 import { useLocation } from "react-router-dom"
 import { studentsState, entriesState } from "src/states"
 import { IssuesBoard, Button, Block } from "comp"
-import { findMostCommonDay, getImageLink } from "src/utils"
+import { findMostCommonDay, getImageLink, dateToHeader } from "src/utils"
 
 const StudentProfile = () => {
 	const location = useLocation()
@@ -42,14 +42,14 @@ const StudentProfile = () => {
 
 			<Subtitle>Recent notes</Subtitle>
 			{notes.length == 0 ? <Nothing>No notes recorded</Nothing> :
-				notes.map(({ note, img, entryId }) =>
+				notes.map(({ note, img, entryId, date }) =>
 				<Note key={note}>
+					<Date>{dateToHeader(date)}</Date>
 					{note}&nbsp;
 					{img ? <a href={getImageLink(entryId)}>View Image</a> : null}
 				</Note>
 				)
 			}
-			
 		</Container>
 		</>
 	)
@@ -116,6 +116,10 @@ const Nothing = styled.div`
 	font-size: 1.6rem;
 	font-weight: bold;
 	text-align: center;
+`
+const Date = styled.div`
+	color: #636363;
+	text-align: right;
 `
 
 export default StudentProfile

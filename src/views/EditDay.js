@@ -30,16 +30,39 @@ const fetchToastOptions = {
 const EditDay = () => {
 	const location = useLocation()
 	const [ grade, section ] = [location.state.grade || "11", location.state.section || "A"]
-	const [, setGlobalEntries] = useRecoilState(entriesState)
+	const [globalEntries, setGlobalEntries] = useRecoilState(entriesState)
 	const students = filterByClass(useRecoilState(studentsState)[0], grade, section)
-	const [entries, setEntries] = useState(genEntriesFromStudents(students))
 	const [time, setTime] = useState("M")
 	const [date, setDate] = useState(getDate())
 	const [detectedStudentId, setDetectedStudentId] = useState("")
+	const [entries, setEntries] = useState(
+		arrOr(filterEntries(globalEntries, grade, section, date), genEntriesFromStudents(students))
+	)
 
-	const handleTable = (entryId, edEntry) => {
+	console.log(entries)
+	console.log(students)
+
+	const handleEntryChange = (entryId, entry) => {
+		let edEntry = entry
+		if(edEntry.attd == "L")
+			edEntry.note = "Entered late at " + (new Date()).toLocaleTimeString()
+
+		console.log("fifi", edEntry)
+
+		if(checkSuspend(edEntry.studentId, students)) {
+			edEntry.note = "Entered class eventhough student is suspended"
+			toast.error(edEntry.name + " is present despite suspension")
+		}
+
 		setEntries(editEntry(entryId, edEntry))
 		setGlobalEntries(editEntry(entryId, editEntry))
+	}
+
+	const handleSave = () => {
+		console.log("time for now", time)
+		const finalEntries = addTimeToEntries(addDateToEntries(entries, date), time)
+		toast.promise(saveEntries(finalEntries, grade, section, date),
+			fetchToastOptions)
 	}
 
 	useEffect(() => {
@@ -48,16 +71,9 @@ const EditDay = () => {
 			return
 
 		toast.success(entry.name + " present")
-		setEntries(editEntry(entry.entryId, { attd: "T" }))
+		handleEntryChange(entry.entryId, { ...entry, attd: "T" })
 		setDetectedStudentId("")
 	}, [detectedStudentId, entries])
-
-	const handleSave = () => {
-		console.log("time for now", time)
-		const finalEntries = addTimeToEntries(addDateToEntries(entries, date), time)
-		toast.promise(saveEntries(finalEntries, grade, section, date),
-			fetchToastOptions)
-	}
 
 	
 	return (
@@ -68,7 +84,8 @@ const EditDay = () => {
 			<FaceButton onDetect={studentId => setDetectedStudentId(studentId)} key={entries} />
 			<Space h="1rem" />
 
-			<input width="100px" type="date" value={date} onChange={e => setDate(e.target.value)} />
+			<input width="100px" type="date" value={date}
+				onChange={e => setDate(e.target.value)} />
 			<Space h="1rem" />
 			<Row>
 				<TimeButton value={time} onClick={newTime => setTime(newTime)} />
@@ -76,10 +93,25 @@ const EditDay = () => {
 				<Button size="small" onClick={handleSave}>Save</Button>
 			</Row>
 			<Space h="1rem" />
-			<DayTable entries={entries} onChange={handleTable} />
+			<DayTable entries={entries} onChange={handleEntryChange} />
 		</Container>
 		</>
 	)
+}
+
+const filterEntries = (entries, grade, section, date) => {
+	return entries.filter(entry =>
+		entry.grade == grade &&
+		entry.section == section &&
+		entry.date == date
+	)
+}
+
+const arrOr = (arr1, arr2) =>
+	arr1.length > 0 ? arr1 : arr2
+
+const checkSuspend = (studentId, students) => {
+	return students.find(student => student.studentId == studentId && student.suspended)
 }
 
 const Container = styled.div`

@@ -26,7 +26,7 @@ const EntryRow = ({ entry, onChange }) => {
 			</Cell>
 			<Cell>
 				<AttdButton value={entry.attd}
-					onClick={(attd) => onChange(entry.entryId, { attd })} />
+					onClick={(attd) => onChange(entry.entryId, { ...entry, attd })} />
 				<ExpandIcon size="2rem" style={{ cursor: "pointer" }} onClick={() => setShowMore(toggle)} />
 			</Cell>
 			{showMore &&

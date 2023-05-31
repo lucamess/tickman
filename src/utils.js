@@ -130,6 +130,9 @@ export const dateToHeader = date => {
 	const dateObj = new Date(date)
 	return months[dateObj.getMonth()] + " " + dateObj.getDate()
 }
+
+
+
 export const sleep = (ms) => (value) => {
 	return new Promise((res) => {
 		setTimeout(() => res(value), ms)
