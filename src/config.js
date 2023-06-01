@@ -30,10 +30,10 @@ export const authConfig = {
 export const serverBaseUrl = "https://incorporeal-yaw.000webhostapp.com/attd/"
 export const faceLabels = ["1","2","3","4","5","6"]
 
-// export const modelsUrl = "https://incorporeal-yaw.000webhostapp.com/attd/models/"
-// export const facesUrl = "https://incorporeal-yaw.000webhostapp.com/attd/faces/"
-export const modelsUrl = "http://0.0.0.0:8000/models/"
-export const facesUrl = "http://0.0.0.0:8000/faces/"
+export const modelsUrl = "https://incorporeal-yaw.000webhostapp.com/attd/models/"
+export const facesUrl = "https://incorporeal-yaw.000webhostapp.com/attd/faces/"
+// export const modelsUrl = "http://0.0.0.0:8000/models/"
+// export const facesUrl = "http://0.0.0.0:8000/faces/"
 
 export const grades = ["9", "10", "11", "12"]
 export const sections = ["A", "B", "C", "D", "E", "F", "G", "H"]
