@@ -58,7 +58,7 @@ const FaceAI = ({ onDetect = nullFn }) => {
 						.withFaceLandmarks().withFaceDescriptors()
 				const resizedDetections = faceapi.resizeResults(detections, displaySize)
 
-				const faceMatcher = new faceapi.FaceMatcher(labeledData, 0.7)
+				const faceMatcher = new faceapi.FaceMatcher(labeledData, 0.5)
 				const results = resizedDetections.map(fd => {
 					return faceMatcher.findBestMatch(fd.descriptor)
 				})
@@ -107,7 +107,7 @@ const loadModelsAndFaces = () => {
 			.then(() => {
 				return Promise.all(
 					faceLabels.map(async label => {
-						const img = await faceapi.fetchImage(`${facesUrl+label}.png`)
+						const img = await faceapi.fetchImage(`${facesUrl+label}.jpg`)
 						const fullFaceDescription = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
 						if(!fullFaceDescription) {
 							throw "no facce detectedi"
